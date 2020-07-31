@@ -3,25 +3,33 @@ const nextButton = document.getElementById('next-btn')
 const questionContainerElement = document.getElementById('question-container')
 const questionElement = document.getElementById('question')
 const answerButtonsElement = document.getElementById('answer-buttons')
-var deadline = new Date("dec 31, 2020 15:37:25").getTime();
+const secondEl = document.getElementById('second')
+const instructionsEl = document.getElementById('instructions')
+let timeLeft = 60
 
-var x = setInterval(function () {
 
-    var now = new Date().getTime();
-    var t = deadline - now;
-    var minutes = Math.floor((t % (1000 * 04 * 60)) / (1000 * 60));
-    var seconds = Math.floor((t % (1000 * 60)) / 1000);
-      document.getElementById("minute").innerHTML = minutes;
-    document.getElementById("second").innerHTML = seconds;
-    //if (t < 0) {
-       // clearInterval(x);
-       if (t === 0) {
-        clearInterval(t);
-        document.getElementById("demo").innerHTML = "TIME UP";
-        document.getElementById("minute").innerHTML = '0';
-        document.getElementById("second").innerHTML = '0';
-    }
+var timer = function() {
+    var timeInterval = setInterval(function() {
+        if (timeLeft > 0 && currentQuestionIndex < questions.length) {
+            timeLeft--
+            secondEl.textContent = timeLeft
+        } else {
+            clearInterval(timeInterval)
+            // insert callback for score
+        }
+
+  
+     
+//    // secondEl.innerHTML = seconds;
+//     //if (t < 0) {
+//        // clearInterval(x);
+//        if (t === 0) {
+//         clearInterval(t);
+//         document.getElementById("demo").innerHTML = "TIME UP";
+//         document.getElementById("second").innerHTML = '0';
+//     }
 }, 1000);
+}
 
 let shuffledQuestions, currentQuestionIndex
 
@@ -44,21 +52,10 @@ function setNextQuestion() {
 }
 
 
-function showQuestion(question) {
-    questionElement.innerText = question.question
-    question.answers.forEach(answer => {
-        const button = document.createElement('button')
-        button.innerText = answer.text
-        button.classList.add('btn')
-        if (answer.correct) {
-            button.dataset.correct = answer.correct
-        }
-        button.addEventListener('click', selectAnswer)
-        answerButtonsElement.appendChild(button)
-    })
-}
+
 function startGame() {
     startButton.classList.add('hide')
+    instructionsEl.classList.add('hide')
     shuffledQuestions = questions.sort(() => Math.random() - .5)
     currentQuestionIndex = 0
     questionContainerElement.classList.remove('hide')
@@ -153,8 +150,10 @@ const questions = [
     {
         question: 'Are butterflies insects?',
         answers: [
-            { text: 'Yes', correct: false },
-            { text: 'No', correct: true }
+            { text: 'Yes', correct: true },
+            { text: 'No', correct: false }
         ]
     }
 ]
+
+startButton.addEventListener('click', timer)
