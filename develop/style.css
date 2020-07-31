@@ -76,7 +76,8 @@
   .hide {
     display: none;
   }
-  body{ 
+  
+body{ 
     text-align: center; 
     background: #00ECB9; 
   font-family: sans-serif; 
