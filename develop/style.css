@@ -76,15 +76,14 @@
   .hide {
     display: none;
   }
-  
-body{ 
+  body{ 
     text-align: center; 
-    background: #00ECB9; 
+    background: #bed8df; 
   font-family: sans-serif; 
   font-weight: 100; 
 } 
 h1{ 
-  color: #396; 
+  color: rgb(54, 62, 24); 
   font-weight: 100; 
   font-size: 40px; 
   margin: 40px 0px 20px; 
@@ -100,13 +99,13 @@ h1{
 #clockdiv > div{ 
     padding: 10px; 
     border-radius: 3px; 
-    background: #00BF96; 
+    background: #4b6560; 
     display: inline-block; 
 } 
 #clockdiv div > span{ 
     padding: 15px; 
     border-radius: 3px; 
-    background: #00816A; 
+    background: #3aa3ee; 
     display: inline-block; 
 } 
 .smalltext{ 
