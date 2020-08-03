@@ -12,6 +12,8 @@ const quizDone = document.getElementById('done');
 const finalScore = document.getElementById('score');
 const countdownEl = document.getElementById('countdown')
 const secEl = document.getElementById('sec')
+const initialButtonEl = document.getElementById('initial-btn')
+let initials = document.getElementById('newInitials')
 let timeLeft = 60
 
 
@@ -134,6 +136,16 @@ function score() {
     finalScore.innerText = "Your final score is " + timeLeft + "."
 };
 
+function saveScore() {
+    localStorage.setItem('timeLeft', timeLeft)
+    localStorage.setItem('initials', initials.value)
+    back()
+}
+
+function back() {
+    window.location.reload()
+}
+
 const questions = [
     {
         question: 'What food makes up nearly all (around 99%) of a Giant Panda’s diet?',
@@ -171,3 +183,4 @@ const questions = [
     }
 ]
 
+initialButtonEl.addEventListener("click", saveScore);
