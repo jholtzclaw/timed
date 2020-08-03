@@ -9,7 +9,7 @@
   <title>Animal Quiz</title>
 </head>
 <body>
-  <div class="container">
+  <div class="container" id="container">
     <p id="instructions">
       Try to answer the following questions within the time
       limit. Keep in mind that incorrect answers will penalize your
@@ -29,16 +29,24 @@
       <button id="next-btn" class="next-btn btn hide">Next</button>
     </div>
   </div>
-</body>
-<h1>Countdown Clock</h1> 
-<div id="clockdiv"> 
-  <div> 
- 
-  <div> 
-    <span class="seconds" id="second"></span> 
-    <div class="smalltext">Seconds</div> 
-  </div> 
-</div> 
   
+<div id="clockdiv" class="smalltext hide"  > 
+    <p id="countdown"> Countdown:</p>
+     <span class="seconds" id="second"></span> 
+     <p id="sec">Seconds</p>
+    </div> 
+ <div id= "currentScore" class="hide">
+  <h1 id="done"></h1>
+  <div id="score" class="score"></div>
+  <div id="initials">
+      Enter Initials: 
+      <input type='text' id='newInitials' value='' /> 
+      <button id='initial-btn' class='btn submitBtn'>
+          Submit
+     </button>
+    </div>
+</div>
+</body>
+
 <p id="demo"></p> 
 </html>

@@ -5,6 +5,13 @@ const questionElement = document.getElementById('question')
 const answerButtonsElement = document.getElementById('answer-buttons')
 const secondEl = document.getElementById('second')
 const instructionsEl = document.getElementById('instructions')
+const currentScoreEl = document.getElementById('currentScore')
+const containerEl = document.getElementById('container')
+const clockEl = document.getElementById('clockdiv')
+const quizDone = document.getElementById('done');
+const finalScore = document.getElementById('score');
+const countdownEl = document.getElementById('countdown')
+const secEl = document.getElementById('sec')
 let timeLeft = 60
 
 
@@ -15,7 +22,7 @@ var timer = function() {
             secondEl.textContent = timeLeft
         } else {
             clearInterval(timeInterval)
-            // insert callback for score
+            score()
         }
 
   
@@ -38,17 +45,11 @@ nextButton.addEventListener('click', () => {
     currentQuestionIndex++
     setNextQuestion()
 })
-function startGame() {
-    startButton.classList.add('hide')
-    shuffledQuestions = questions.sort(() => Math.random() - .5)
-    currentQuestionIndex = 0
-    questionContainerElement.classList.remove('hide')
-    setNextQuestion()
-}
+
 
 function setNextQuestion() {
     resetState()
-    showQuestion(shuffledQuestions[currentQuestionIndex])
+    showQuestion()
 }
 
 
@@ -56,20 +57,19 @@ function setNextQuestion() {
 function startGame() {
     startButton.classList.add('hide')
     instructionsEl.classList.add('hide')
-    shuffledQuestions = questions.sort(() => Math.random() - .5)
+
     currentQuestionIndex = 0
     questionContainerElement.classList.remove('hide')
     setNextQuestion()
+    timer()
 }
 
-function setNextQuestion() {
-    resetState()
-    showQuestion(shuffledQuestions[currentQuestionIndex])
-}
+
 
 function showQuestion(question) {
-    questionElement.innerText = question.question
-    question.answers.forEach(answer => {
+    questionElement.innerText = questions[currentQuestionIndex].question
+    questions[currentQuestionIndex].answers.forEach((answer, i) => {
+        var id = i + 1
         const button = document.createElement('button')
         button.innerText = answer.text
         button.classList.add('btn')
@@ -92,15 +92,17 @@ function resetState() {
 function selectAnswer(e) {
     const selectedButton = e.target
     const correct = selectedButton.dataset.correct
+    if (!correct) {
+        timeLeft = Math.max(0, timeLeft - 10)
+    }
     setStatusClass(document.body, correct)
     Array.from(answerButtonsElement.children).forEach(button => {
         setStatusClass(button, button.dataset.correct)
     })
-    if (shuffledQuestions.length > currentQuestionIndex + 1) {
+    if (questions.length > currentQuestionIndex + 1) {
         nextButton.classList.remove('hide')
     } else {
-        startButton.innerText = 'Restart'
-        startButton.classList.remove('hide')
+        score()
     }
 }
 
@@ -110,6 +112,7 @@ function setStatusClass(element, correct) {
         element.classList.add('correct')
     } else {
         element.classList.add('wrong')
+        
     }
 }
 
@@ -118,6 +121,18 @@ function clearStatusClass(element) {
     element.classList.remove('wrong')
 }
 
+function score() {
+    containerEl.classList.add('hide')
+    questionContainerElement.classList.add('hide')
+    currentScoreEl.classList.remove('hide')
+    clockEl.classList.add('hide')
+    secondEl.classList.add('hide')
+    countdownEl.classList.add('hide')
+    secEl.classList.add('hide')
+    currentScore.classList.remove('hide')
+    quizDone.innerText = "All done!"
+    finalScore.innerText = "Your final score is " + timeLeft + "."
+};
 
 const questions = [
     {
@@ -156,4 +171,3 @@ const questions = [
     }
 ]
 
-startButton.addEventListener('click', timer)
