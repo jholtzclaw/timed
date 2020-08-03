@@ -13,6 +13,10 @@ const finalScore = document.getElementById('score');
 const countdownEl = document.getElementById('countdown')
 const secEl = document.getElementById('sec')
 const initialButtonEl = document.getElementById('initial-btn')
+const showScore = document.getElementById('savedScore');
+const showingScore = document.getElementById('saved-score');
+const goBack = document.getElementById('go-back-btn');
+const clearBtn = document.getElementById('clear-btn');
 let initials = document.getElementById('newInitials')
 let timeLeft = 60
 
@@ -142,8 +146,33 @@ function saveScore() {
     back()
 }
 
+function displayScore() {
+    containerEl.classList.add('hide')
+    questionContainerElement.classList.add('hide')
+    currentScoreEl.classList.add('hide')
+    clockEl.classList.add('hide')
+    secondEl.classList.add('hide')
+    countdownEl.classList.add('hide')
+    secEl.classList.add('hide')
+    currentScore.classList.add('hide')
+    showScore.classList.remove('hide')
+    let savedScore = localStorage.getItem('timeLeft');
+    let savedInitials = localStorage.getItem('initials')
+    if (savedScore === null || savedInitials === null) {
+        showingScore.innerHTML = "No saved score"
+    }
+    else {
+        showingScore.innerHTML = savedInitials + "-" + savedScore
+     }
+}
+
 function back() {
     window.location.reload()
+}
+
+function deleteScore() {
+    localStorage.clear(); 
+    displayScore();
 }
 
 const questions = [
@@ -184,3 +213,7 @@ const questions = [
 ]
 
 initialButtonEl.addEventListener("click", saveScore);
+
+viewScore.addEventListener("click", displayScore);
+goBack.addEventListener("click", back);
+clearBtn.addEventListener("click", deleteScore);
